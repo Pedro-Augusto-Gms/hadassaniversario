@@ -93,7 +93,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* GALERIA + CARTA LADO A LADO */}
+      {/* GALERIA + CARTA LADO A DO */}
       <section className="secao-dupla">
         {/* COLUNA ESQUERDA — GALERIA STICKY */}
         <div className="galeria-coluna">
