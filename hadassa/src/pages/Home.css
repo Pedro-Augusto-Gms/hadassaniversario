@@ -1,0 +1,415 @@
+.home {
+  min-height: 100vh;
+  background: #fdf6f0;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(160deg, #e8748a 0%, #c0526a 60%, #a83a56 100%);
+  color: white;
+  text-align: center;
+  padding: 3.5rem 1.2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-inner {
+  
+  position: relative;
+  z-index: 2;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 0.8rem;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+
+.hero-titulo {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+.coracao-titulo {
+  display: inline-block;
+  animation: bounce 1.5s ease infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+.hero-data {
+  font-size: 1rem;
+  opacity: 0.75;
+  font-weight: 300;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+/* PÉTALAS FLUTUANTES */
+.petalas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.petala {
+  position: absolute;
+  font-size: 1.4rem;
+  opacity: 0.25;
+  animation: cair 8s ease-in infinite;
+  animation-delay: calc(var(--i) * 0.45s);
+  left: calc(var(--i) * 5.5%);
+  top: -10%;
+}
+
+@keyframes cair {
+  0% {
+    transform: translateY(-10%) rotate(0deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   SEÇÃO DUPLA — GALERIA + CARTA LADO A LADO
+   ============================================ */
+.secao-dupla {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  align-items: start;
+}
+
+/* COLUNA GALERIA */
+.galeria-coluna {
+  padding-right: 1.5rem;
+}
+
+/* STICKY: a galeria fica presa enquanto a carta rola */
+.galeria-sticky {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.secao-titulo {
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+  color: #3a2a1e;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.secao-desc {
+  text-align: center;
+  color: #7a5c4a;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+/* GALERIA */
+.galeria-main {
+  position: relative;
+  cursor: pointer;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 16px 50px rgba(232, 116, 138, 0.2);
+}
+
+.foto-destaque {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.galeria-main:hover .foto-destaque {
+  transform: scale(1.03);
+}
+
+.galeria-hint {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.coracao-flutuante {
+  position: absolute;
+  font-size: 1.8rem;
+  pointer-events: none;
+  animation: subirCoracao 1.2s ease forwards;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+@keyframes subirCoracao {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -160%) scale(1.4);
+  }
+}
+
+.galeria-thumbs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.8rem;
+}
+
+.thumb {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.thumb.ativa {
+  border-color: #e8748a;
+  transform: scale(1.1);
+}
+
+.thumb:hover {
+  transform: scale(1.08);
+}
+
+/* COLUNA CARTA */
+.carta-coluna {
+  padding-left: 1.5rem;
+  border-left: 2px solid #f9d0da;
+}
+
+.carta {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 2rem 1.8rem;
+  box-shadow: 0 12px 40px rgba(232, 116, 138, 0.12);
+  border-top: 5px solid #e8748a;
+}
+
+.carta-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  color: #3a2a1e;
+  margin-bottom: 1.4rem;
+}
+
+.carta-header span {
+  font-size: 1.8rem;
+}
+
+.carta-texto {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: #4a3628;
+  white-space: pre-line;
+}
+
+.carta-assinatura {
+  margin-top: 1.5rem;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  color: #e8748a;
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+/* ============================================
+   SEÇÕES SIMPLES (baixo da página)
+   ============================================ */
+.secao {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+/* BOTÃO CORAÇÃO */
+.secao-coracao {
+  text-align: center;
+}
+
+.btn-coracao {
+  font-size: 5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s;
+  display: block;
+  margin: 1.5rem auto 0;
+}
+
+.btn-coracao.pulsando {
+  animation: pulsoGrande 0.5s ease;
+}
+
+@keyframes pulsoGrande {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.coracao-msg {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  color: #e8748a;
+  margin-top: 0.8rem;
+  animation: fadeUp 0.4s ease;
+}
+
+/* RODAPÉ */
+.rodape {
+  background: linear-gradient(135deg, #e8748a, #c0526a);
+  color: white;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
+.rodape p {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 0.3rem;
+}
+
+.rodape-nome {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem !important;
+  opacity: 1 !important;
+  font-weight: 700;
+}
+
+/* ANIMAÇÃO GLOBAL */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   RESPONSIVO — CELULAR (≤ 700px)
+   ============================================ */
+@media (max-width: 700px) {
+  .secao-dupla {
+    /* No celular: galeria em cima, carta embaixo */
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem;
+    gap: 2rem;
+  }
+
+  /* Remove o sticky no celular (não faz sentido empilhado) */
+  .galeria-sticky {
+    position: static;
+  }
+
+  .galeria-coluna {
+    padding-right: 0;
+  }
+
+  .carta-coluna {
+    padding-left: 0;
+    border-left: none;
+    border-top: 2px solid #f9d0da;
+    padding-top: 2rem;
+  }
+
+  .foto-destaque {
+    height: 260px;
+  }
+
+  .thumb {
+    width: 48px;
+    height: 48px;
+  }
+
+  .carta {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .carta-header {
+    font-size: 1.2rem;
+  }
+
+  .carta-texto {
+    font-size: 0.95rem;
+  }
+
+  .secao-titulo {
+    font-size: 1.4rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVO — TABLET (701px – 900px)
+   ============================================ */
+@media (min-width: 701px) and (max-width: 900px) {
+  .secao-dupla {
+    grid-template-columns: 1fr 1fr;
+    padding: 2rem 1rem;
+  }
+
+  .foto-destaque {
+    height: 260px;
+  }
+
+  .thumb {
+    width: 46px;
+    height: 46px;
+  }
+
+  .carta {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .carta-texto {
+    font-size: 0.93rem;
+  }
+}
