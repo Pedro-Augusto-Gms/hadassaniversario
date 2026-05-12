@@ -15,16 +15,82 @@ const fotos = [
 ];
 
 const NOME = "Feliz Aniverário Amorzinho";
+const nome1 = "Feliz Aniversário Princesa"
+/* QUIZ */
+const perguntas = [
+  {
+  pergunta: "Aonde conversamos(sem ser cumprimento) pela primeira vez?",
+  opcoes: ["Igreja", "Sua casa", "Casa da Júlia", "Escola"],
+  certa: 1  // 👈 índice da opção certa (0 = primeira, 1 = segunda, etc.)
+},
+  {
+  pergunta: "Quando eu te pedi em namoro?(dia e mês)",
+  opcoes: ["11/11", "09/11", "11/09", "10/11"],
+  certa: 3  // 👈 índice da opção certa (0 = primeira, 1 = segunda, etc.)
+}, 
+  {
+  pergunta: "Quando saímos pela primeira vez?(qual foi a saída)",
+  opcoes: ["Sorvete no seu aniversário", "Comer salgado e andar", "Comida japonesa", "Pizza depois do culto"],
+  certa: 0  // 👈 índice da opção certa (0 = primeira, 1 = segunda, etc.)
+},
+  {
+  pergunta: "O que eu falo que mais gosto em você",
+  opcoes: ["Cabelo", "Personalidade", "Tamanho", "(to em duvida entre cabelo e personalidade, essa é a resposta kkkkkkkkkkkk)"],
+  certa: 3  // 👈 índice da opção certa (0 = primeira, 1 = segunda, etc.)
+},
+  {
+  pergunta: "Qual meu insta? 🙄🙄🙄🙄🙄🙄🙄(nao vale roubar)",
+  opcoes: ["Pedro.Aug_", "Aug_Pedro.", "Aug.Pedro_", "Pedro_Aug."],
+  certa: 2  // 👈 índice da opção certa (0 = primeira, 1 = segunda, etc.)
+},
+  {
+  pergunta: "Figurinha que eu mais usava no WPP quando começamos a nos falar",
+  opcoes: ["Aquele cara super sério que não tem expressão facial", "Homem moreno mandando fazer shiu.", "Gatinho", "Menininha coreana."],
+  certa: 0  // 👈 índice da opção certa (0 = primeira, 1 = segunda, etc.)
+},
+];
 
-
+const resultados = [
+  {
+    min: 0, max: 3,
+    emoji: "🥺",
+    titulo: "Errou mais que 3. Não me ama",
+    msg: "Nossa amor"
+  },
+  {
+    min: 4, max: 4,
+    emoji: "🙄",
+    titulo: "4/6 Errou mais que uma",
+    msg: "🙄🙄🙄🙄🙄🙄🙄🙄🙄🙄🙄"
+  },
+  {
+    min: 5, max: 5,
+    emoji: "🙄",
+    titulo: "5/6 Deve ter errado a do insta né",
+    msg: "🙄🙄🙄🙄🙄🙄🙄🙄🙄🙄🙄"
+  },
+  
+  {
+    min: 6, max: 6,
+    emoji: "🏆",
+    titulo: "6/6 Fez o mínimo",
+    msg: "Parabéns amorzinho"
+  },
+];
 
 export default function Home() {
   const [fotoAtual, setFotoAtual] = useState(0);
   const [coracao, setCoracao] = useState(false);
-  const [mensagemIdx, setMensagemIdx] = useState(0);
   const [coracoes, setCoracoes] = useState([]);
-  const [velas, setVelas] = useState(Array(5).fill(true));
   const [tempoJuntos, setTempoJuntos] = useState("");
+
+  // Quiz state
+  const [quizIniciado, setQuizIniciado] = useState(false);
+  const [quizFinalizado, setQuizFinalizado] = useState(false);
+  const [perguntaAtual, setPerguntaAtual] = useState(0);
+  const [pontuacao, setPontuacao] = useState(0);
+  const [respostaSelecionada, setRespostaSelecionada] = useState(null);
+  const [animandoResposta, setAnimandoResposta] = useState(false);
 
   /* CONTADOR DE TEMPO */
   useEffect(() => {
@@ -69,9 +135,37 @@ export default function Home() {
     }, 1200);
   }
 
-  function apagarVela(idx) {
-    setVelas((prev) => prev.map((v, i) => (i === idx ? false : v)));
+  function responder(idx) {
+    if (animandoResposta) return;
+    setRespostaSelecionada(idx);
+    setAnimandoResposta(true);
+
+    const acertou = idx === perguntas[perguntaAtual].certa;
+
+    setTimeout(() => {
+      if (acertou) setPontuacao((p) => p + 1);
+      setRespostaSelecionada(null);
+      setAnimandoResposta(false);
+
+      if (perguntaAtual + 1 >= perguntas.length) {
+        setQuizFinalizado(true);
+      } else {
+        setPerguntaAtual((p) => p + 1);
+      }
+    }, 900);
   }
+
+  function reiniciarQuiz() {
+    setQuizIniciado(false);
+    setQuizFinalizado(false);
+    setPerguntaAtual(0);
+    setPontuacao(0);
+    setRespostaSelecionada(null);
+  }
+
+  const resultado = resultados.find(
+    (r) => pontuacao >= r.min && pontuacao <= r.max
+  ) || resultados[resultados.length - 1];
 
   return (
     <div className="home">
@@ -114,11 +208,7 @@ export default function Home() {
                 alt={`momento ${fotoAtual + 1}`}
                 className="foto-destaque"
               />
-              
             </div>
-
-            {/* THUMBS */}
-           
           </div>
         </div>
 
@@ -155,29 +245,79 @@ export default function Home() {
               Por fim, amo cada detalhe seu, dês do sorriso, olhos, cabelo, personalidade(até o ciúme), e tudo que tem dentro desse serzinho que é você kkkkkkk. EU TE AMOOOO!!!
             </p>
 
-            <p className="carta-assinatura">— Para a melhor garota do mundo</p>
+            <p className="carta-assinatura">— Com amor: Seu amorzinho</p>
           </div>
         </div>
       </section>
 
       {/* BOTÃO DE AMOR */}
-      <section className="secao secao-coracao">
-        <h2 className="secao-titulo">Aperta se quiser sentir amor 🥺</h2>
-        <button
-          className={`btn-coracao ${coracao ? "pulsando" : ""}`}
-          onClick={() => {
-            setCoracao(true);
-            setTimeout(() => setCoracao(false), 1000);
-          }}
-        >
-          {coracao ? "💖" : "🤍"}
-        </button>
-        {coracao && <p className="coracao-msg">Eu te amo muito! 💕</p>}
-      </section>
+     
+        <center>
+      {/* QUIZ DO CASAL */}
+      <section className="secao secao-quiz">
+        <h2 className="secao-titulo">Quiz, se errar vai ver</h2>
+        <p className="secao-desc">Se errar não me ama, ta fácil</p>
 
+        <div className="quiz-card">
+          {!quizIniciado && !quizFinalizado && (
+            <div className="quiz-inicio">
+              <span className="quiz-emoji-grande">💕</span>
+              <p className="quiz-intro">
+                Um quizinho fofo pra você responder e descobrir o resultado!
+              </p>
+              <button className="quiz-btn-iniciar" onClick={() => setQuizIniciado(true)}>
+                Começar quiz 🌸
+              </button>
+            </div>
+          )}
+
+          {quizIniciado && !quizFinalizado && (
+            <div className="quiz-pergunta-wrap">
+              <div className="quiz-progresso">
+                <div
+                  className="quiz-progresso-barra"
+                  style={{
+                    width: `${((perguntaAtual) / perguntas.length) * 100}%`,
+                  }}
+                />
+              </div>
+              <p className="quiz-contador">
+                {perguntaAtual + 1} de {perguntas.length}
+              </p>
+              <p className="quiz-pergunta">
+                {perguntas[perguntaAtual].pergunta}
+              </p>
+              <div className="quiz-opcoes">
+                {perguntas[perguntaAtual].opcoes.map((op, idx) => (
+                  <button
+                    key={idx}
+                    className={`quiz-opcao ${respostaSelecionada === idx ? "selecionada" : ""}`}
+                    onClick={() => responder(idx)}
+                    disabled={animandoResposta}
+                  >
+                    {op}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {quizFinalizado && (
+            <div className="quiz-resultado">
+              <span className="quiz-resultado-emoji">{resultado.emoji}</span>
+              <h3 className="quiz-resultado-titulo">{resultado.titulo}</h3>
+              <p className="quiz-resultado-desc">{resultado.msg}</p>
+              <button className="quiz-btn-reiniciar" onClick={reiniciarQuiz}>
+                Fazer de novo 🔄
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+</center>
       <footer className="rodape">
-        <p>Feito com muito amor só pra você 🌸</p>
-        <p className="rodape-nome"> {NOME}! ✨</p>
+        <p>Feito com muito amor</p>
+        <p className="rodape-nome"> {nome1}! ✨</p>
       </footer>
     </div>
   );

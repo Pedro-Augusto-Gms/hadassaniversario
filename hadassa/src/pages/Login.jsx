@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./Login.css";
 
 /* ✏️ MUDE AQUI: defina o usuário e senha corretos */
-const USUARIO_CORRETO = "a";
-const SENHA_CORRETA = "a";
+const USUARIO_CORRETO = "hadassa";
+const SENHA_CORRETA = "chamativo";
 
 export default function Login({ onLogin }) {
   const [usuario, setUsuario] = useState("");
@@ -13,9 +13,9 @@ export default function Login({ onLogin }) {
 
   function handleLogin() {
     if (
-      usuario.trim().toLowerCase() === USUARIO_CORRETO &&
-      senha === SENHA_CORRETA
-    ) {
+  usuario.trim().toLowerCase() === USUARIO_CORRETO.toLowerCase() &&
+  senha.trim().toLowerCase() === SENHA_CORRETA.toLowerCase()
+) {
       onLogin();
     } else {
       setErro("Hmm... não parece que é você! Tenta de novo 🐾");
@@ -43,11 +43,10 @@ export default function Login({ onLogin }) {
         </div>
 
         <p className="login-question">
-          Espera aí... você é a <span className="highlight">Hadassa</span>{" "}
-          mesmo? 🌸
+          Espera aí, será que é você mesmo?
         </p>
         <p className="login-sub">
-          Só entram pessoas autorizadas aqui viu! Prova que é você:
+          Só entram pessoas autorizadas aqui viu! Prova que é você:<br></br>(Dica: A senha é a palavra aleatória que vc me disse no insta na segunda)
         </p>
 
         <div className="input-group">
